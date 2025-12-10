@@ -223,7 +223,9 @@ module Brcobranca
 
           move_more(doc, -15.8, -0.8)
           if boleto.cedente_endereco
-            doc.show boleto.cedente_endereco
+            # carlos - linha abaixo original
+            #doc.show boleto.cedente_endereco
+            doc.show "#{boleto.cedente_endereco} - #{boleto.documento_cedente.formata_documento}"
             move_more(doc, 1.2, 0.3)
             doc.show boleto.cedente
             move_more(doc, -1.2, -0.3)

@@ -31,7 +31,7 @@ module Brcobranca
         #     ‘4’ = Sacado via SMS
 
         validates_presence_of :digito_agencia, :convenio, message: 'não pode estar em branco.'
-        validates_length_of :convenio, maximum: 6, message: 'deve ter 6 dígitos.'
+        validates_length_of :convenio, maximum: 7, message: 'deve ter 7 dígitos.'
         validates_length_of :versao_aplicativo, maximum: 4, message: 'deve ter 4 dígitos.'
         validates_length_of :digito_agencia, is: 1, message: 'deve ter 1 dígito.'
         validates_length_of :modalidade_carteira, is: 2, message: 'deve ter 2 dígitos.'
@@ -48,7 +48,7 @@ module Brcobranca
         end
 
         def convenio=(valor)
-          @convenio = valor.to_s.rjust(6, '0') if valor
+          @convenio = valor.to_s.rjust(7, '0') if valor
         end
 
         def versao_aplicativo=(valor)
@@ -84,14 +84,14 @@ module Brcobranca
         end
 
         def convenio_lote
-          "#{convenio.rjust(6, '0')}#{''.rjust(14, '0')}"
+          "#{convenio.rjust(7, '0')}#{''.rjust(14, '0')}"
         end
 
         def info_conta
           # CAMPO            # TAMANHO
           # agencia          5
           # digito agencia   1
-          # cod. convenio    6
+          # cod. convenio    7
           # uso CAIXA        7
           # uso CAIXA        1
           "#{agencia.to_s.rjust(5, '0')}#{digito_agencia}#{convenio}#{''.rjust(7, '0')}0"
@@ -120,7 +120,7 @@ module Brcobranca
           # uso CAIXA             11
           # modalidade carteira   2
           # ident. titulo         15
-          "#{convenio.rjust(6,
+          "#{convenio.rjust(7,
                             '0')}#{''.rjust(11,
                                             '0')}#{modalidade_carteira}#{pagamento.nosso_numero.to_s.rjust(15, '0')}"
         end

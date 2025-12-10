@@ -18,7 +18,7 @@ module Brcobranca
       validates_length_of :carteira, is: 1, message: 'deve possuir 1 dígitos.'
       # Emissão do boleto (4-Beneficiário)
       validates_length_of :emissao, is: 1, message: 'deve possuir 1 dígitos.'
-      validates_length_of :convenio, is: 6, message: 'deve possuir 6 dígitos.'
+      validates_length_of :convenio, is: 7, message: 'deve possuir 7 dígitos.'
       validates_length_of :nosso_numero, is: 15, message: 'deve possuir 15 dígitos.'
 
       # Nova instância da CaixaEconomica
@@ -30,7 +30,7 @@ module Brcobranca
           emissao: '4'
         }.merge!(campos)
 
-        campos[:local_pagamento] = 'PREFERENCIALMENTE NAS CASAS LOTÉRICAS ATÉ O VALOR LIMITE'
+        campos[:local_pagamento] = 'EM TODA A REDE BANCÁRIA E SEUS CORRESPONDENTES ATÉ O VALOR LIMITE'
 
         super(campos)
       end
@@ -80,8 +80,9 @@ module Brcobranca
       # @return [String]
       # @example
       #  boleto.agencia_conta_boleto #=> "1565/100000-4"
+      #  "#{agencia}/#{convenio}-#{convenio_dv}"
       def agencia_conta_boleto
-        "#{agencia}/#{convenio}-#{convenio_dv}"
+        "#{agencia}/#{convenio}"
       end
 
       # Dígito verificador do convênio ou código do cedente
@@ -102,10 +103,10 @@ module Brcobranca
       #  15: dígito 2 do nosso número (emissão do boleto)
       #  16 à 24: dígito 9 à 17 do nosso número
       #  25: dígito verificador do campo livre
+      #                "#{convenio_dv}" \
       # @return [String]
       def codigo_barras_segunda_parte
         campo_livre = "#{convenio}" \
-                      "#{convenio_dv}" \
                       "#{nosso_numero_boleto[2..4]}" \
                       "#{nosso_numero_boleto[0..0]}" \
                       "#{nosso_numero_boleto[5..7]}" \
