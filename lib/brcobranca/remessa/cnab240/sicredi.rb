@@ -152,7 +152,7 @@ module Brcobranca
         end
 
         def codigo_desconto(_pagamento)
-          '1'
+          "#{_pagamento.cod_desconto}"
         end
 
         def codigo_baixa(_pagamento)
